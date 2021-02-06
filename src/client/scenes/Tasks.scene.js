@@ -10,7 +10,7 @@ function TasksScene() {
 
   const [sortedTasks, setSortedTasks] = useState(tasks)
   const [isPriority, setIsPriority] = useState(false)
-  const [sortKey, setSortKey] = useState(false)
+  const [sortKey, setSortKey] = useState("all")
 
   useEffect(() => {
     axios.get('/api/v1/tasks').then(({data}) => setTasks(data))
