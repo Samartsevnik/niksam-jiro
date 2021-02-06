@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import TasksScene from './client/scenes/Tasks.scene';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TasksScene />
   </React.StrictMode>,
   document.getElementById('root')
 );
