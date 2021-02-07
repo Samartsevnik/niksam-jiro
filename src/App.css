@@ -1,42 +1,96 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .load {
-  text-align: center;
+    text-align: center;
 }
 
 .wrapper {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 100px;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.description {
+    font-size: 14px;
+    padding: 10px;
 }
 
 .bottom-menu {
-  border: 1px solid black;
-  width: 300px;
-  margin-top: 50px;
+    border: 1px solid black;
+    width: 400px;
+    margin-top: 50px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottom-menu__priority {
+    font-size: 14px;
 }
 
 .tasks {
-  width: 300px;
+    width: 400px;
+    height: 500px;
+    margin-top: 80px;
+    overflow-y: scroll;
+    border: 1px solid black;
+    padding: 15px;
 }
 
 .tasks-card {
-  border: 1px solid black;
-  padding: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px 0;
+    background: #f9f9f9;
 }
 
 .information {
-  display: flex;
-  margin: 20px 0 10px 0;
-  justify-content: space-between;
+    display: flex;
+    margin: 20px 0 10px 0;
+    justify-content: space-between;
 }
 
 .buttons {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
+}
+
+.task-editor {
+    display: flex;
+    width: 400px;
+    margin-top: 10px;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.task-editor__item {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.task-editor__item input {
+    margin-left: 10px;
+}
+
+.task-editor__buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.task-editor__buttons button {
+    margin: 10px 5px 0 5px;
+}
+
+#task-edit-priority,
+.task-editor__item input,
+.task-editor__item textarea {
+    width: 200px;
+    padding: 3px 10px;
 }

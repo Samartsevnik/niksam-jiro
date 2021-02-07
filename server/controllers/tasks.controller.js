@@ -21,7 +21,7 @@ exports.getTasks = async (req, res) => {
 }
 
 exports.createTask = async (req, res) => {
-  const { task } = req.body
+  const task = req.body
   const tasks = await read()
   const updatedTasks =  [...tasks, task]
   await write(updatedTasks)
@@ -29,7 +29,7 @@ exports.createTask = async (req, res) => {
 }
 
 exports.updateTask = async (req, res) => {
-  const { task } = req.body
+  const task = req.body
   const tasks = await read()
   const updatedTasks =  tasks.reduce((acc, rec) => {
     if (rec.id === task.id) {
@@ -45,7 +45,7 @@ exports.deleteTask = async (req, res) => {
   const { taskId } = req.params
   const tasks = await read()
   const updatedTasks =  tasks.reduce((acc, rec) => {
-    if (rec.id === taskId) {
+    if (rec.id === +taskId) {
       return acc
     }
     return [...acc, rec]

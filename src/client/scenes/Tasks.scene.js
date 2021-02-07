@@ -1,42 +1,65 @@
 import {Fragment, useEffect, useState, useCallback} from 'react'
-import axios from "axios";
+import {useSelector, useDispatch} from 'react-redux'
 import '../../App.css';
 import Task from "../components/Task";
 import BottomMenu from "../components/BottomMenu";
+import {getTasks} from "../redux/reducers/tasks";
+import TaskEditor from "../components/TaskEditor";
 
 function TasksScene() {
+  const dispatch = useDispatch()
+  const tasks = useSelector((s) => s.tasks.tasks)
 
-  const [tasks, setTasks] = useState([])
+  const [task, setTask] = useState(tasks)
 
   const [sortedTasks, setSortedTasks] = useState(tasks)
   const [isPriority, setIsPriority] = useState(false)
   const [sortKey, setSortKey] = useState("all")
+  const [showEditing, setShowEditing] = useState(false)
+
 
   useEffect(() => {
-    axios.get('/api/v1/tasks').then(({data}) => setTasks(data))
-  }, [])
+    dispatch(getTasks())
+  }, [dispatch])
 
   useEffect(() => {
-    setSortedTasks(tasks.filter((task) => task.project === sortKey || 'all' === sortKey))
+    if (sortedTasks.length === 0) {
+      setSortKey('all')
+    }
+  }, [sortedTasks.length])
+
+  useEffect(() => {
+    if (sortKey === 'all') {
+      setSortedTasks(tasks)
+    } else {
+      setSortedTasks(tasks.filter((task) => task.project === sortKey))
+    }
   }, [sortKey, tasks])
 
   useEffect(() => {
-    setSortedTasks(tasks)
-  }, [tasks])
-
-  useEffect(() => {
-    if(isPriority) {
-      setSortedTasks((prev) => prev.sort((a, b) => a.priority - b.priority ))
+    if (isPriority) {
+      setSortedTasks((prev) => [...prev].sort((a, b) => a.priority - b.priority))
     } else {
-      setSortedTasks((prev) => prev.sort((a, b) => a.id - b.id ))
+      setSortedTasks((prev) => [...prev].sort((a, b) => a.date - b.date))
     }
-  }, [isPriority, sortedTasks, sortKey])
+  }, [isPriority, sortKey, tasks])
 
-  const onChangeKey = useCallback(({target:{value}}) => {
+  const onChangeKey = useCallback(({target: {value}}) => {
     setSortKey(value)
   }, [])
 
-  if(tasks.length === 0) {
+  const showCreatingHandler = useCallback(() => {
+    setShowEditing((prev) => !prev)
+    setTask('')
+  }, [])
+
+  const showEditorHandler = useCallback((task) => {
+    setTask(task)
+    setShowEditing(true)
+  }, [])
+
+
+  if (tasks.length === 0) {
     return <h2 className="load">Loading....</h2>
   }
 
@@ -46,12 +69,21 @@ function TasksScene() {
         {
           sortedTasks.map((task) => (
             <Fragment key={task.id}>
-              <Task task={task}/>
+              <Task task={task} showEditorHandler={showEditorHandler}/>
             </Fragment>
           ))
         }
       </div>
-      <BottomMenu tasks={tasks} onChangeKey={onChangeKey} setIsPriority={setIsPriority}/>
+      {showEditing ?
+        <TaskEditor task={task} showCreatingHandler={showCreatingHandler}/> :
+        <BottomMenu
+          tasks={tasks}
+          onChangeKey={onChangeKey}
+          setIsPriority={setIsPriority}
+          showCreatingHandler={showCreatingHandler}
+          isPriority={isPriority}
+          sortKey={sortKey}/>
+      }
     </div>
   );
 }

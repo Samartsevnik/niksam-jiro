@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import TasksScene from './client/scenes/Tasks.scene';
 import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux'
+import store from './client/redux'
 
 ReactDOM.render(
   <React.StrictMode>
-    <TasksScene />
+    <Provider store={store}>
+      <TasksScene/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

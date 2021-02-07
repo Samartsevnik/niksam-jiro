@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const BottomMenu = ({tasks, onChangeKey, setIsPriority}) => {
+const BottomMenu = ({tasks, onChangeKey, setIsPriority, showCreatingHandler, sortKey, isPriority}) => {
 
   const [uniqueProjects, setUniqueProjects] = useState([])
 
@@ -10,9 +10,12 @@ const BottomMenu = ({tasks, onChangeKey, setIsPriority}) => {
 
   return (
     <div className="bottom-menu">
-      <button>Добавить</button>
-      <input type="checkbox" onChange={(e) => setIsPriority(e.target.checked)} />
-      <select name="tasklist" id="list" onChange={onChangeKey} defaultValue="all">
+      <button onClick={showCreatingHandler}>Добавить</button>
+      <label className="bottom-menu__priority">
+        По приоритету:
+      <input type="checkbox" checked={isPriority} onChange={(e) => setIsPriority(e.target.checked)} />
+      </label>
+      <select name="tasklist" id="list" onChange={onChangeKey} value={sortKey}>
         <option value="all">all</option>
         {uniqueProjects.map((project) => (
           <option key={project} value={project}>{project}</option>
