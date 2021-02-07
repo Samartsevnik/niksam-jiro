@@ -14,7 +14,7 @@ const port = config.port || 9000
 
 const middleware = [
   cors(),
-  express.static(path.resolve(__dirname, '../../build')),
+  express.static(path.resolve(__dirname, '../build')),
   bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }),
   bodyParser.json({ limit: '50mb', extended: true })
 ]
