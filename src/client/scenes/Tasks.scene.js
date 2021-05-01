@@ -59,10 +59,6 @@ function TasksScene() {
   }, [])
 
 
-  if (tasks.length === 0) {
-    return <h2 className="load">Loading....</h2>
-  }
-
   return (
     <div className="wrapper">
       <div className="tasks">
